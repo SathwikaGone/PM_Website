@@ -1,0 +1,76 @@
+﻿@model IEnumerable<CURD.Models.Match>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- https://github.com/SortableJS/Sortable  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/css/sortable-theme-bootstrap.min.css" />
+
+<!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+
+
+<h2>Knowledge Areas</h2>
+
+@*<div class="form-group">
+    <input type="submit" value="Submit" class="btn btn-default" />
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+<div class="container">
+    <div class="col-md-6">
+        <table class="table table-bordered table-hover ">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.KnowledgeArea)
+                    </th>
+                    @*<th><a asp-action="Create">Create New</a></th>
+                    </tr>*@
+
+
+            </thead>
+            <tbody id="sortable">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KnowledgeArea)
+                        </td>
+                        @*<td>
+                            <a asp-action="Edit" asp-route-id="@item.MatchId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.MatchId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.MatchId">Delete</a>
+                        </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-md-4">
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const newSeries = document.getElementById('sortable')
+    new Sortable(newSeries, {
+        group: {
+            name: 'shared'
+        },
+        animation: 150,
+        fallbackOnBody: true,
+        swapThreshold: 0.65,
+        ghostClass: 'blue-background-class'
+    });
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
